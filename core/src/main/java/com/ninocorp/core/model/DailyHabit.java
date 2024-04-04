@@ -17,7 +17,12 @@ public class DailyHabit extends Habit {
     private int target = Integer.MAX_VALUE;
 
     public DailyHabit(String description) {
+        this(description, Integer.MAX_VALUE);
+    }
+
+    public DailyHabit(String description, int target) {
         super(description);
+        this.target = target;
     }
 
     @Override
@@ -33,6 +38,11 @@ public class DailyHabit extends Habit {
     @Override
     public void reset() {
         this.current = 0;
+    }
+
+    @Override
+    public void done() {
+        this.current++;
     }
 
 }

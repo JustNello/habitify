@@ -19,4 +19,6 @@ public abstract class Habit {
     public abstract void complete();
 
     public abstract void reset();
+
+    public abstract void done();
 }

@@ -83,4 +83,21 @@ public class HabitTest {
         Assertions.assertEquals(result, page.getHabit(1));
         Assertions.assertEquals("Eating at least two Paleo meals", result.getDescription());
     }
+
+    @Test
+    void userCanGetTheCurrentHabitTheyAreWorkingOnNoMatterWhat() {
+        // given
+        Notebook notebook = new Notebook("2024");
+        Page page = notebook.page("dIet");
+        page.addHabit(new DailyHabit("Eating at least one Paleo meal", 1));
+        page.addHabit(new DailyHabit("Eating at least two Paleo meals"));
+        page.getHabit(0).done();
+
+        // when
+        Habit result = page.getCurrentHabit();
+
+        // then
+        Assertions.assertEquals(result, page.getHabit(1));
+        Assertions.assertEquals("Eating at least two Paleo meals", result.getDescription());
+    }
 }
