@@ -19,6 +19,9 @@
         <module>
             core
         </module>
+        <module>
+            shell
+        </module>
     </modules>
 
 </project>
