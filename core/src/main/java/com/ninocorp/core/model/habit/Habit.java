@@ -1,4 +1,4 @@
-package com.ninocorp.core.model;
+package com.ninocorp.core.model.habit;
 
 import com.ninocorp.core.util.time.Timestamp;
 

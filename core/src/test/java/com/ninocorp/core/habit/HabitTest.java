@@ -1,10 +1,10 @@
 package com.ninocorp.core.habit;
 
 import com.ninocorp.core.exception.CompletedHabitException;
-import com.ninocorp.core.model.DailyHabit;
-import com.ninocorp.core.model.Habit;
-import com.ninocorp.core.model.Notebook;
-import com.ninocorp.core.model.Page;
+import com.ninocorp.core.model.habit.DailyHabit;
+import com.ninocorp.core.model.habit.Habit;
+import com.ninocorp.core.model.habit.Notebook;
+import com.ninocorp.core.model.habit.Page;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

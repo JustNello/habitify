@@ -1,4 +1,4 @@
-package com.ninocorp.core.model;
+package com.ninocorp.core.model.habit;
 
 public enum StatusEnum {
     COMPLETED,

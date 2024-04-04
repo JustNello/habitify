@@ -1,25 +1,24 @@
 package com.ninocorp.shell;
 
-import com.ninocorp.core.dummy.DummyService;
+import com.ninocorp.core.service.NotebooksManager;
+import com.ninocorp.shell.command.HabitCommands;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
+import org.springframework.shell.command.annotation.CommandScan;
+import org.springframework.shell.command.annotation.EnableCommand;
 
-@SpringBootApplication(scanBasePackages = "com.ninocorp.core.dummy")
+@SpringBootApplication(scanBasePackages = {
+		"com.ninocorp.shell.config"
+})
+@CommandScan
 public class ShellApplication {
 
 	@Autowired
-	DummyService dummyService;
+	NotebooksManager notebooksManager;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ShellApplication.class, args);
-	}
-
-	@Bean
-	public CommandLineRunner logProperty() {
-		return args -> System.out.println(dummyService.message());
 	}
 
 }
