@@ -1,5 +1,7 @@
 package com.ninocorp.core.model;
 
+import com.ninocorp.core.util.time.Timestamp;
+
 public abstract class Habit {
 
     protected String description;
@@ -20,5 +22,5 @@ public abstract class Habit {
 
     public abstract void reset();
 
-    public abstract void done();
+    public abstract void done(Timestamp timestamp);
 }

@@ -1,5 +1,6 @@
 package com.ninocorp.core.model;
 
+import com.ninocorp.core.exception.CompletedHabitException;
 import lombok.Data;
 
 import java.util.LinkedList;
@@ -37,11 +38,11 @@ public class Page {
         return habits.remove(index);
     }
 
-    public Habit getCurrentHabit() {
+    public Habit getCurrentHabit() throws CompletedHabitException {
         return habits.stream()
                 .filter(habit -> !habit.isCompleted())
                 .findFirst()
-                .orElseThrow(() -> new UnsupportedOperationException("All habits in this page are completed"));
+                .orElseThrow(CompletedHabitException::new);
     }
 
     private boolean isWithinBound(int index) {

@@ -1,11 +1,15 @@
 package com.ninocorp.core.habit;
 
+import com.ninocorp.core.exception.CompletedHabitException;
 import com.ninocorp.core.model.DailyHabit;
 import com.ninocorp.core.model.Habit;
 import com.ninocorp.core.model.Notebook;
 import com.ninocorp.core.model.Page;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static com.ninocorp.core.util.time.Timestamp.today;
+import static com.ninocorp.core.util.time.Timestamp.yesterday;
 
 public class HabitTest {
 
@@ -91,7 +95,7 @@ public class HabitTest {
         Page page = notebook.page("dIet");
         page.addHabit(new DailyHabit("Eating at least one Paleo meal", 1));
         page.addHabit(new DailyHabit("Eating at least two Paleo meals"));
-        page.getHabit(0).done();
+        page.getHabit(0).done(yesterday());
 
         // when
         Habit result = page.getCurrentHabit();
@@ -99,5 +103,28 @@ public class HabitTest {
         // then
         Assertions.assertEquals(result, page.getHabit(1));
         Assertions.assertEquals("Eating at least two Paleo meals", result.getDescription());
+    }
+
+    @Test
+    void anHabitCanBeDoneUntilComplete() {
+        // given
+        Notebook notebook = new Notebook("2024");
+        Page page = notebook.page("dIet");
+        page.addHabit(new DailyHabit("Eating at least one Paleo meal", 2));
+        page.addHabit(new DailyHabit("Eating at least two Paleo meals", 2));
+
+        // when
+        page.getCurrentHabit().done(yesterday());
+        page.getCurrentHabit().done(today());
+        page.getCurrentHabit().done(yesterday());
+        page.getCurrentHabit().done(today());
+
+        Exception result = Assertions.assertThrows(CompletedHabitException.class,
+                page::getCurrentHabit);
+
+        // then
+        Assertions.assertEquals("All habits in this page are completed",
+                result.getMessage());
+
     }
 }

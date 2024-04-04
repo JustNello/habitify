@@ -1,16 +1,16 @@
 package com.ninocorp.core.model;
 
+import com.ninocorp.core.util.time.Timestamp;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class DailyHabit extends Habit {
 
-    private List<DailyTrack> dailyTracks = new ArrayList<>();
+    private Set<DailyTrack> dailyTracks = new HashSet<>();
 
     private int current = 0;
 
@@ -32,17 +32,18 @@ public class DailyHabit extends Habit {
 
     @Override
     public void complete() {
-        this.current = target;
+        current = target;
     }
 
     @Override
     public void reset() {
-        this.current = 0;
+        current = 0;
     }
 
     @Override
-    public void done() {
-        this.current++;
+    public void done(Timestamp timestamp) {
+        current++;
+        dailyTracks.add(new DailyTrack(StatusEnum.DONE, timestamp));
     }
 
 }
