@@ -83,6 +83,10 @@ public class CapitalizedHashMap <V> implements Iterable<V> {
         return result;
     }
 
+    public boolean containsItem(String key) {
+        return items.containsKey(capitalize(key));
+    }
+
     @Override
     public Iterator<V> iterator() {
         return items.values()

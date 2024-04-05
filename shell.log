@@ -80,3 +80,13 @@
 1712320861012:habit do --page diet
 1712320865611:habit ps --page diet
 1712320888093:exit
+1712321885677:habit ps
+1712321891187:habit do --page d
+1712321898009:habit do --page diet
+1712321911126:exit
+1712321960974:habit do --page di
+1712321986410:habit do --page d
+1712321990911:habit do --page diet
+1712321995892:habit ps
+1712321998500:habit ps -a
+1712322005704:exit

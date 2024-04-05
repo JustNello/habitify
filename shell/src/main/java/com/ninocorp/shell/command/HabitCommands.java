@@ -11,6 +11,7 @@ import org.springframework.shell.command.annotation.Option;
 
 import static com.ninocorp.core.util.time.Timestamp.today;
 import static com.ninocorp.core.util.time.Timestamp.yesterday;
+import static java.lang.String.format;
 
 @Command(command = "habit", description = "Display and update habits")
 @RequiredArgsConstructor
@@ -53,6 +54,9 @@ public class HabitCommands {
                     shortNames = 'y',
                     defaultValue = "true") boolean yesterday
     ) {
+        if (!notebooksManager.mostUsedNotebook().getPages().containsItem(userPage))
+            return format("No page found with name: '%s'", userPage);
+
         // mark as done
         notebooksManager
                 .mostUsedNotebook()
