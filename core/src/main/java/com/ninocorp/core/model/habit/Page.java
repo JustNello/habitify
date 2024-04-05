@@ -49,6 +49,12 @@ public class Page {
                 .orElseThrow(CompletedHabitException::new);
     }
 
+    public Page asCurrentHabit() {
+        Page result = new Page(title);
+        result.addHabit(getCurrentHabit());
+        return result;
+    }
+
     public boolean isComplete() {
         try {
             getCurrentHabit();
@@ -64,5 +70,17 @@ public class Page {
 
     private boolean isWithinBound(int index) {
         return index >= 0 && index < habits.size();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder("\n\n");
+        result.append("[").append(title).append("]");
+        for (int i = 0; i < habits.size(); i++) {
+            result.append("\n").append("[").append(i).append("]")
+                    .append("\t")
+                    .append(habits.get(i));
+        }
+        return result.toString();
     }
 }

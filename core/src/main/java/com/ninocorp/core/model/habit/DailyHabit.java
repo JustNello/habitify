@@ -6,6 +6,8 @@ import lombok.EqualsAndHashCode;
 
 import java.util.*;
 
+import static java.lang.String.format;
+
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class DailyHabit extends Habit {
@@ -44,6 +46,11 @@ public class DailyHabit extends Habit {
     public void done(Timestamp timestamp) {
         current++;
         dailyTracks.add(new DailyTrack(StatusEnum.DONE, timestamp));
+    }
+
+    @Override
+    public String toString() {
+        return format("{%d/%d}\t%s", current, target, description);
     }
 
 }

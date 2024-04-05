@@ -128,4 +128,14 @@ public class HabitTest {
                 result.getMessage());
         Assertions.assertTrue(page.isComplete());
     }
+
+    @Test
+    void habitCanBePrinted() {
+        Habit habit = new DailyHabit("Read one page", 4);
+        habit.done(yesterday());
+
+        String result = habit.toString();
+
+        Assertions.assertEquals("{1/4}\tRead one page", result);
+    }
 }

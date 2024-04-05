@@ -1,55 +1,70 @@
 package com.ninocorp.shell.command;
 
-import com.ninocorp.core.model.habit.Habit;
 import com.ninocorp.core.model.habit.Page;
 import com.ninocorp.core.service.NotebooksManager;
+import com.ninocorp.core.util.time.OnEnum;
+import com.ninocorp.core.util.time.Timestamp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.command.annotation.Command;
 import org.springframework.shell.command.annotation.Option;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import static com.ninocorp.core.util.time.Timestamp.today;
+import static com.ninocorp.core.util.time.Timestamp.yesterday;
 
-import static java.lang.String.format;
-
-@Command(command = "habit")
+@Command(command = "habit", description = "Display and update habits")
 @RequiredArgsConstructor
 public class HabitCommands {
 
     @Autowired
     private final NotebooksManager notebooksManager;
 
-    @Command(command = "ps")
+    @Command(command = "ps", description = "Display habits")
     public String listHabits(
-            @Option(longNames = "page", required = false) String userPage,
-            @Option(longNames = "all", shortNames = 'a', defaultValue = "false") boolean all) {
+            @Option(description = "Specifies the page of habits to display. Useful for pagination.",
+                    longNames = "page",
+                    required = false) String userPage,
+            @Option(description = "Toggles between displaying all habits (true) or only incomplete habits (false). Default is 'false'.",
+                    longNames = "all",
+                    shortNames = 'a',
+                    defaultValue = "false") boolean all) {
 
         StringBuilder output = new StringBuilder();
-        List<Habit> habits = new ArrayList<>();
 
         for (Page page : notebooksManager.mostUsedNotebook().getPages().itemOrSelf(userPage)) {
             // list all habits
-            if (all) {
-                habits = page.getAllHabits();
-            }
+            if (all)
+                output.append(page);
             // list habits that are not completed
-            else if (!page.isComplete()) {
-                habits = Collections.singletonList(page.getCurrentHabit());
-            }
-
-            // text to be written on the terminal
-            output
-                    .append("\n\n")
-                    .append(page.getTitle());
-            for (var habit : habits) {
-                output
-                    .append("\n")
-                    .append(habit);
-            }
+            else if (!page.isComplete())
+                output.append(page.asCurrentHabit());
         }
 
         return output.toString();
+    }
+
+    @Command(command = "do", description = "Mark an habit as done")
+    public String doHabit(
+            @Option(description = "Specifies the page of habits to mark as done",
+                    longNames = "page",
+                    required = true) String userPage,
+            @Option(description = "Specify that the habit has been completed either yesterday or today",
+                    longNames = "yesterday",
+                    shortNames = 'y',
+                    defaultValue = "true") boolean yesterday
+    ) {
+        // mark as done
+        notebooksManager
+                .mostUsedNotebook()
+                .page(userPage)
+                .getCurrentHabit()
+                .done((yesterday) ? yesterday() : today());
+
+        // terminal text
+        return notebooksManager
+                .mostUsedNotebook()
+                .page(userPage)
+                .asCurrentHabit()
+                .toString();
     }
 }

@@ -13,6 +13,13 @@ public record Timestamp(LocalDateTime value) {
         return new Timestamp(LocalDateTime.now().minusDays(1));
     }
 
+    public static Timestamp valueOf(OnEnum onEnum) {
+        return switch (onEnum) {
+            case TODAY -> today();
+            case YESTERDAY -> yesterday();
+        };
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
