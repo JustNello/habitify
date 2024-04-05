@@ -103,6 +103,7 @@ public class HabitTest {
         // then
         Assertions.assertEquals(result, page.getHabit(1));
         Assertions.assertEquals("Eating at least two Paleo meals", result.getDescription());
+        Assertions.assertFalse(page.isComplete());
     }
 
     @Test
@@ -125,6 +126,6 @@ public class HabitTest {
         // then
         Assertions.assertEquals("All habits in this page are completed",
                 result.getMessage());
-
+        Assertions.assertTrue(page.isComplete());
     }
 }

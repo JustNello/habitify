@@ -1,8 +1,11 @@
 package com.ninocorp.core.model.habit;
 
 import com.ninocorp.core.exception.CompletedHabitException;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,6 +14,7 @@ public class Page {
 
     private String title;
 
+    @Getter(value = AccessLevel.PRIVATE)
     private List<Habit> habits = new LinkedList<>();
 
     protected Page(String title) {
@@ -43,6 +47,19 @@ public class Page {
                 .filter(habit -> !habit.isCompleted())
                 .findFirst()
                 .orElseThrow(CompletedHabitException::new);
+    }
+
+    public boolean isComplete() {
+        try {
+            getCurrentHabit();
+            return false;
+        } catch (CompletedHabitException e) {
+            return true;
+        }
+    }
+
+    public List<Habit> getAllHabits() {
+        return Collections.unmodifiableList(habits);
     }
 
     private boolean isWithinBound(int index) {

@@ -12,4 +12,8 @@ public class NotebooksManager {
     public Notebook notebook(String title) {
         return notebooks.item(title);
     }
+
+    public Notebook mostUsedNotebook() {
+        return notebooks.findFirst();
+    }
 }
