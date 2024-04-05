@@ -2,10 +2,7 @@ package com.ninocorp.core.model;
 
 import lombok.NonNull;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Function;
 
 import static com.ninocorp.core.util.StringUtil.capitalize;
@@ -81,6 +78,10 @@ public class CapitalizedHashMap <V> implements Iterable<V> {
         V result = onNewItem.apply(capitalize(key));
         items.put(capitalize(key), result);
         return result;
+    }
+
+    public Set<String> keys() {
+        return items.keySet();
     }
 
     public boolean containsItem(String key) {

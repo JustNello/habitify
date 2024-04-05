@@ -4,6 +4,7 @@ import com.ninocorp.core.model.habit.Page;
 import com.ninocorp.core.service.NotebooksManager;
 import com.ninocorp.core.util.time.OnEnum;
 import com.ninocorp.core.util.time.Timestamp;
+import com.ninocorp.core.validation.ExistingPage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.command.annotation.Command;
@@ -24,7 +25,8 @@ public class HabitCommands {
     public String listHabits(
             @Option(description = "Specifies the page of habits to display. Useful for pagination.",
                     longNames = "page",
-                    required = false) String userPage,
+                    required = false)
+            @ExistingPage String userPage,
             @Option(description = "Toggles between displaying all habits (true) or only incomplete habits (false). Default is 'false'.",
                     longNames = "all",
                     shortNames = 'a',
@@ -48,7 +50,8 @@ public class HabitCommands {
     public String doHabit(
             @Option(description = "Specifies the page of habits to mark as done",
                     longNames = "page",
-                    required = true) String userPage,
+                    required = true)
+            @ExistingPage String userPage,
             @Option(description = "Specify that the habit has been completed either yesterday or today",
                     longNames = "yesterday",
                     shortNames = 'y',
