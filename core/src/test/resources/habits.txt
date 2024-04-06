@@ -1,0 +1,3 @@
+Diet,Eating one paleo meal,2,7,[20240406,20240405]
+Diet,Eating two paleo meals,1,7,[20240406]
+Sleep,Going to sleep before 20.45,0,7,[]

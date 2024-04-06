@@ -2,17 +2,18 @@ package com.ninocorp.core.model.habit;
 
 import com.ninocorp.core.util.time.Timestamp;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 import static java.lang.String.format;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class DailyHabit extends Habit {
+public class DailyHabit implements Habit {
 
     private Set<DailyTrack> dailyTracks = new HashSet<>();
+
+    private String description;
 
     private int current = 0;
 
@@ -23,7 +24,7 @@ public class DailyHabit extends Habit {
     }
 
     public DailyHabit(String description, int target) {
-        super(description);
+        this.description = description;
         this.target = target;
     }
 
