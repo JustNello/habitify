@@ -1,0 +1,15 @@
+{
+  "namespace": "com.ninocorp.core.avro",
+  "type": "record",
+  "name": "Track",
+  "fields": [
+    {
+      "name": "status",
+      "type": "com.ninocorp.core.avro.Status"
+    },
+    {
+      "name": "timestamp",
+      "type": "float"
+    }
+  ]
+}

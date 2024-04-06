@@ -1,0 +1,6 @@
+{
+  "namespace": "com.ninocorp.core.avro",
+  "type": "enum",
+  "name": "Status",
+  "symbols": ["COMPLETED", "DONE", "SKIPPED"]
+}
