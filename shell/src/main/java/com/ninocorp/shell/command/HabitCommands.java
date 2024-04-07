@@ -14,7 +14,7 @@ import static com.ninocorp.core.util.time.Timestamp.today;
 import static com.ninocorp.core.util.time.Timestamp.yesterday;
 import static java.lang.String.format;
 
-@Command(command = "habit", description = "Display and update habits")
+@Command(command = "habit", description = "Display and update habits", hidden = true)
 @RequiredArgsConstructor
 public class HabitCommands {
 
