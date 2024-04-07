@@ -8,11 +8,10 @@ import java.io.File;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import static com.ninocorp.core.util.FileUtil.withinResources;
+import static com.ninocorp.core.util.time.Timestamp.yesterday;
 
 class PortableHabitsTest {
 
@@ -61,17 +60,23 @@ class PortableHabitsTest {
     }
 
     @Test
-    void demo() throws NoSuchFileException {
+    void habitFileCanBeAddedHabitsOrUpdated() throws NoSuchFileException {
+        // given
         HabitFileReader reader = new HabitFileReader(withinResources("habits.txt"));
+        HabitFile habitFile = HabitFile.valueOf(reader);
 
-        HabitFile file = HabitFile.valueOf(reader);
+        // when
+        habitFile.add(new HabitRow("Diet,Eating three Paleo meals,0,30,[]"));
+        habitFile.done("Diet", yesterday());
 
-        /* methods that should be implemented
-        file.add(new HabitRow());
-        file.remove(new HabitRow());
-        file.done("Diet", yesterday());
-        *
-         */
+        // then
+        Assertions.assertEquals(Arrays.asList(
+                "Diet,Eating one paleo meal,3,7,[20240406,20240406]",
+                "Diet,Eating two paleo meals,1,7,[20240406]",
+                "Sleep,Going to sleep before 20.45,0,7,[]",
+                "Diet,Eating three paleo meals,0,30,[]"
+                )
+                , habitFile.getRowLines());
     }
 
     private File tempFile(Path tempDir) {

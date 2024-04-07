@@ -1,24 +1,30 @@
 package com.ninocorp.core.portable;
 
+import com.ninocorp.core.model.habit.Habit;
 import com.ninocorp.core.util.StringUtil;
+import com.ninocorp.core.util.time.Timestamp;
 import lombok.Value;
+import lombok.experimental.NonFinal;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.ninocorp.core.util.StringUtil.capitalize;
 
 @Value
-public class HabitRow {
+public class HabitRow implements Habit {
 
     private final static DateTimeFormatter FORMATTER = DateTimeFormatter.BASIC_ISO_DATE;
 
     String habit;
     String description;
+    @NonFinal
     int current;
+    @NonFinal
     int target;
     List<LocalDate> dates;
 
@@ -56,6 +62,14 @@ public class HabitRow {
                 .collect(Collectors.toList());
     }
 
+    public boolean is(String habit) {
+        return this.habit.equals(capitalize(habit));
+    }
+
+    public List<LocalDate> getDates() {
+        return Collections.unmodifiableList(dates);
+    }
+
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
@@ -73,5 +87,26 @@ public class HabitRow {
         result.append("]");
 
         return result.toString();
+    }
+
+    @Override
+    public boolean isCompleted() {
+        return current >= target;
+    }
+
+    @Override
+    public void complete() {
+        current = target;
+    }
+
+    @Override
+    public void reset() {
+        current = 0;
+    }
+
+    @Override
+    public void done(Timestamp timestamp) {
+        current++;
+        dates.add(timestamp.value().toLocalDate());
     }
 }
