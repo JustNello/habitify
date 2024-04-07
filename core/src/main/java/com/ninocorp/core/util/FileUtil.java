@@ -1,6 +1,6 @@
 package com.ninocorp.core.util;
 
-import com.ninocorp.core.portable.HabitFileReader;
+import com.ninocorp.core.portable.io.HabitFileReader;
 
 import java.io.File;
 import java.nio.file.NoSuchFileException;

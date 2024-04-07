@@ -1,5 +1,6 @@
 package com.ninocorp.core.portable;
 
+import com.ninocorp.core.portable.io.HabitFileReader;
 import com.ninocorp.core.util.time.Timestamp;
 import lombok.EqualsAndHashCode;
 
