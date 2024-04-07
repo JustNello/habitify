@@ -4,6 +4,7 @@ import com.ninocorp.core.portable.HabitFile;
 import com.ninocorp.core.portable.HabitFileReader;
 import com.ninocorp.core.portable.HabitFileWriter;
 import jakarta.annotation.PreDestroy;
+import lombok.Getter;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -14,6 +15,7 @@ public class HabitFileStorage {
     private final StorageProperties properties;
     private final HabitFileReader reader;
     private final HabitFileWriter writer;
+    @Getter
     private final HabitFile habitFile;
 
     public HabitFileStorage(StorageProperties properties) {
@@ -25,10 +27,6 @@ public class HabitFileStorage {
 
     private File habitFileOnDisk() {
         return new File(properties.getFile());
-    }
-
-    public HabitFile getHabitFile() {
-        return habitFile;
     }
 
     public void save() {
